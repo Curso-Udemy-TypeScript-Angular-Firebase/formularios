@@ -1,0 +1,54 @@
+<div class="container">
+    <form [formGroup]="myCreatedForm">
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" formControlName="name">
+            <div *ngIf="myCreatedForm.controls['name'].dirty && myCreatedForm.controls['name'].invalid"
+                class="alert alert-danger" role="alert">
+                <span *ngIf="myCreatedForm.controls['name'].errors?.required">Nombre requerido</span>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Correo</label>
+            <input type="text" class="form-control" formControlName="email">
+            <div *ngIf="myCreatedForm.controls['email'].dirty && myCreatedForm.controls['email'].invalid">
+                <div *ngIf="myCreatedForm.controls['email'].errors?.required" class="alert alert-danger" role="alert">
+                    Correo requerido
+                </div>
+                <div *ngIf="myCreatedForm.controls['email'].errors?.email" class="alert alert-danger" role="alert">
+                    No parece un correo válido </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" class="form-control" formControlName="password">
+            <div *ngIf="myCreatedForm.controls['password'].dirty && myCreatedForm.controls['password'].invalid">
+                <div *ngIf="myCreatedForm.controls['password'].errors?.required" class="alert alert-danger" role="alert">
+                    Contraseña requerida
+                </div>
+                <div *ngIf="myCreatedForm.controls['password'].errors?.minlength" class="alert alert-danger" role="alert">
+                    La contraseña debe tener al menos 8 caracteres
+                </div>
+            </div>
+
+        </div>
+        <button *ngIf="isNew" [disabled]="!myCreatedForm.valid" class="btn btn-success" (click)="saveData()">Crear</button>
+        <button *ngIf="!isNew" [disabled]="!myCreatedForm.valid" class="btn btn-primary" (click)="saveEdit()">Editar</button>
+
+    </form>
+</div>
+<div class="container console center-center">
+    <div class="card text-white bg-dark mb-3"  *ngFor="let item of userList; let i = index">
+        <div class="card-header">Data Console</div>
+        <div class="card-body">
+            <h4>{{item.name}}</h4>
+            <p>{{item.email}}</p>
+            <p>{{item.password}}</p>
+            <button class="btn btn-warning" (click)="editData(i)">Editar</button>
+            <button class="btn btn-danger" (click)="deleteData(i)">Borrar</button>
+        </div>
+    </div>
+</div>
